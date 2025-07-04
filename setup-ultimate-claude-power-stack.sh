@@ -65,16 +65,23 @@ echo ""
 echo "🤖 Installing AI Coding Tools..."
 echo "---------------------------------"
 
-# Install Python and pip if not present
+# Install Python and pipx if not present
 if ! command -v python3 &> /dev/null; then
     echo "📦 Installing Python 3..."
     brew install python@3.12
 fi
 
+# Install pipx for Python apps
+if ! command -v pipx &> /dev/null; then
+    echo "📦 Installing pipx..."
+    brew install pipx
+    pipx ensurepath
+fi
+
 # Install Aider (AI pair programming)
 if ! command -v aider &> /dev/null; then
     echo "📦 Installing Aider..."
-    pip3 install aider-chat
+    pipx install aider-chat
 else
     echo "✅ Aider already installed"
 fi
@@ -82,7 +89,7 @@ fi
 # Install ShellGPT
 if ! command -v sgpt &> /dev/null; then
     echo "📦 Installing ShellGPT..."
-    pip3 install shell-gpt
+    pipx install shell-gpt
 else
     echo "✅ ShellGPT already installed"
 fi
@@ -90,7 +97,7 @@ fi
 # Install gptme
 if ! command -v gptme &> /dev/null; then
     echo "📦 Installing gptme..."
-    pip3 install gptme
+    pipx install gptme
 else
     echo "✅ gptme already installed"
 fi
@@ -98,7 +105,7 @@ fi
 # Install Fabric
 if ! command -v fabric &> /dev/null; then
     echo "📦 Installing Fabric..."
-    pip3 install fabric
+    pipx install fabric
     # Set up Fabric patterns
     mkdir -p ~/.config/fabric/patterns
 else
@@ -112,7 +119,7 @@ echo "------------------------------------"
 # Install code2prompt
 if ! command -v code2prompt &> /dev/null; then
     echo "📦 Installing code2prompt..."
-    pip3 install code2prompt
+    pipx install code2prompt
 else
     echo "✅ code2prompt already installed"
 fi
@@ -263,6 +270,9 @@ alias cwatch='watch -n 1 "git status --short && echo \"---\" && git diff --stat"
 alias ctree='watch -n 1 "tree -C -L 3 --dirsfirst | head -40"'
 alias ccontext='repomix && echo "Context file generated!"'
 alias cprompt='code2prompt . | pbcopy && echo "Codebase copied to clipboard!"'
+
+# Aider with Opus 4 and skip permissions by default
+alias caider='aider --dangerously-skip-permissions --model claude-3-opus-20240229'
 
 # Function to feed file changes to Claude
 cfeed() {

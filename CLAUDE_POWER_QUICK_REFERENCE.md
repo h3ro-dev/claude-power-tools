@@ -12,7 +12,8 @@ cpower  # Launches 4-pane tmux setup
 claude                # Claude Code Max in terminal
 gitui                 # Visual git interface
 tig                   # Alternative git viewer
-aider                 # AI pair programming (configure for Opus 4)
+caider                # Aider with Opus 4 + skip permissions (alias)
+aider --dangerously-skip-permissions  # Manual Aider with no prompts
 sgpt "question"       # Quick AI queries
 gptme                 # Terminal AI agent
 ```
@@ -95,6 +96,7 @@ ctree     # Watch file tree
 ccontext  # Generate Repomix context
 cprompt   # Copy codebase to clipboard
 cfeed     # Copy git diff to feed to Claude
+caider    # Aider with Opus 4 + skip permissions
 ```
 
 ## 🎨 Advanced Tips
@@ -122,8 +124,10 @@ repomix --include="*.py" --exclude="tests/*"
 
 ### Parallel AI Assistance
 ```bash
-# Use Aider for complex refactoring
-aider --claude-3-opus-20240229 --file src/main.py
+# Use Aider for complex refactoring (with skip permissions)
+caider --file src/main.py
+# Or manually:
+aider --dangerously-skip-permissions --claude-3-opus-20240229 --file src/main.py
 
 # Use gptme for quick scripts
 gptme "write a script to backup my database"

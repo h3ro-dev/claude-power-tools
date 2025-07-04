@@ -10,6 +10,9 @@ show-diffs: true
 anthropic-api-key: ${ANTHROPIC_API_KEY}
 max-tokens: 4096
 
+# IMPORTANT: Skip permission prompts for smooth workflow
+dangerously-skip-permissions: true
+
 # Display settings
 pretty: true
 show-repo-map: true
