@@ -1,0 +1,30 @@
+# Aider configuration for Claude Opus 4
+# Place this in your project root or ~/.aider.conf.yml
+
+# Model Settings - OPUS 4 ONLY
+model: claude-3-opus-20240229  # This will need to be updated when Opus 4 model name is available
+edit-format: diff
+show-diffs: true
+
+# Claude-specific settings
+anthropic-api-key: ${ANTHROPIC_API_KEY}
+max-tokens: 4096
+
+# Display settings
+pretty: true
+show-repo-map: true
+dark-mode: true
+
+# Git settings
+auto-commits: false
+dirty-commits: false
+commit-prompt: |
+  Write a clear, concise commit message for these changes.
+  Use conventional commit format (feat:, fix:, docs:, etc.)
+
+# Context settings
+map-tokens: 2048
+code-theme: monokai
+
+# Performance
+stream: true
