@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Power Tools - Your AI Coding Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .workflow-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .workflow-title {
+            color: #495057;
+            font-size: 20px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .command-output {
+            background: #2d3748;
+            color: #48bb78;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #48bb78;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .help-text {
+            color: #718096;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        .memory-item {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Claude Power Tools</h1>
+        <p class="subtitle">Your interactive AI coding assistant - no coding knowledge required!</p>
+        
+        <!-- Quick Start Section -->
+        <div class="workflow-section">
+            <h2 class="workflow-title">🎯 Quick Start - Create New Project</h2>
+            <div class="input-group">
+                <input type="text" id="projectName" placeholder="Enter project name (e.g., my-awesome-app)">
+                <button onclick="createProject()">Create Project</button>
+            </div>
+            <div class="input-group">
+                <input type="text" id="projectIdea" placeholder="Describe what you want to build in plain English...">
+                <button onclick="startBuilding()">Start Building</button>
+            </div>
+            <div class="command-output" id="quickstart-output"></div>
+        </div>
+        
+        <!-- Common Tasks Section -->
+        <div class="workflow-section">
+            <h2 class="workflow-title">🛠️ Common Tasks</h2>
+            <div class="button-grid">
+                <button onclick="runCommand('repomix --output context.xml', 'Generating context file...')">
+                    📦 Generate Context
+                </button>
+                <button onclick="askClaude()">
+                    💬 Ask Claude
+                </button>
+                <button onclick="runCommand('git status', 'Checking git status...')">
+                    📊 Check Status
+                </button>
+                <button onclick="runCommand('git diff', 'Showing changes...')">
+                    📝 Show Changes
+                </button>
+            </div>
+            <div class="command-output" id="common-output"></div>
+        </div>
+        
+        <!-- Task Management Section -->
+        <div class="workflow-section">
+            <h2 class="workflow-title">📋 Task Management (Taskmaster)</h2>
+            <div class="button-grid">
+                <button onclick="runCommand('task-master init', 'Initializing Taskmaster...')">
+                    🚀 Initialize Tasks
+                </button>
+                <button onclick="runCommand('task-master current', 'Getting current task...')">
+                    👀 View Current Task
+                </button>
+                <button onclick="runCommand('task-master complete', 'Completing task...')">
+                    ✅ Complete Task
+                </button>
+                <button onclick="runCommand('task-master list', 'Listing all tasks...')">
+                    📋 List All Tasks
+                </button>
+            </div>
+            <div class="command-output" id="task-output"></div>
+        </div>
+        
+        <!-- Memory Section -->
+        <div class="workflow-section">
+            <h2 class="workflow-title">🧠 Memory & Context</h2>
+            <div class="input-group">
+                <input type="text" id="memoryNote" placeholder="Add a note to remember...">
+                <button onclick="addMemory()">Save to Memory</button>
+            </div>
+            <div class="button-grid">
+                <button onclick="searchMemory()">
+                    🔍 Search Memories
+                </button>
+                <button onclick="runCommand('echo $MEM0_API_KEY | head -c 20', 'Checking Mem0 setup...')">
+                    ✅ Check Mem0 Setup
+                </button>
+            </div>
+            <div class="command-output" id="memory-output"></div>
+        </div>
+        
+        <!-- Git Operations Section -->
+        <div class="workflow-section">
+            <h2 class="workflow-title">💾 Save Your Work</h2>
+            <div class="input-group">
+                <input type="text" id="commitMessage" placeholder="What did we just do? (e.g., Added login page)">
+                <button onclick="commitChanges()">Save Changes</button>
+            </div>
+            <div class="button-grid">
+                <button onclick="runCommand('git add .', 'Staging all changes...')">
+                    ➕ Stage All Changes
+                </button>
+                <button onclick="runCommand('git log --oneline -5', 'Showing recent commits...')">
+                    📜 Recent History
+                </button>
+            </div>
+            <div class="command-output" id="git-output"></div>
+        </div>
+        
+        <!-- Help Section -->
+        <div class="workflow-section">
+            <h2 class="workflow-title">❓ Need Help?</h2>
+            <p class="help-text">
+                Remember: You don't need to know HOW to code. Just describe WHAT you want, and Claude will build it for you!
+            </p>
+            <div class="button-grid">
+                <button onclick="showExample()">
+                    💡 Show Example
+                </button>
+                <button onclick="runCommand('claude --version', 'Checking Claude version...')">
+                    🔧 Check Setup
+                </button>
+            </div>
+            <div class="command-output" id="help-output"></div>
+        </div>
+    </div>
+    
+    <div class="status" id="status"></div>
+    
+    <script>
+        // Show status message
+        function showStatus(message, duration = 3000) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, duration);
+        }
+        
+        // Copy command to clipboard and show in output
+        function runCommand(command, message) {
+            navigator.clipboard.writeText(command);
+            showStatus(`Command copied: ${command}`);
+            
+            // Show in appropriate output area
+            const outputId = event.target.closest('.workflow-section').querySelector('.command-output').id;
+            const output = document.getElementById(outputId);
+            output.style.display = 'block';
+            output.textContent = `$ ${command}\n\n${message}\n\nCommand copied to clipboard! Paste it in your terminal.`;
+        }
+        
+        // Create new project
+        function createProject() {
+            const projectName = document.getElementById('projectName').value || 'my-project';
+            const commands = `cd ~/Desktop && mkdir ${projectName} && cd ${projectName} && git init`;
+            
+            navigator.clipboard.writeText(commands);
+            showStatus('Project creation commands copied!');
+            
+            const output = document.getElementById('quickstart-output');
+            output.style.display = 'block';
+            output.textContent = `$ ${commands}\n\nCommands copied! This will:\n1. Go to your Desktop\n2. Create folder: ${projectName}\n3. Enter the folder\n4. Initialize git\n\nPaste in terminal to execute.`;
+        }
+        
+        // Start building with Claude
+        function startBuilding() {
+            const idea = document.getElementById('projectIdea').value || 'a simple web app';
+            const command = `claude "Please help me build ${idea}. Create all necessary files and explain what each does."`;
+            
+            navigator.clipboard.writeText(command);
+            showStatus('Claude command copied!');
+            
+            const output = document.getElementById('quickstart-output');
+            output.style.display = 'block';
+            output.textContent = `$ ${command}\n\nCommand copied! Claude will:\n1. Understand your idea\n2. Create all necessary files\n3. Explain everything in simple terms\n4. Guide you through the process`;
+        }
+        
+        // Ask Claude with custom prompt
+        function askClaude() {
+            const prompt = window.prompt('What would you like to ask Claude?', 'How do I add a new feature to my app?');
+            if (prompt) {
+                const command = `claude "${prompt}"`;
+                navigator.clipboard.writeText(command);
+                showStatus('Claude command copied!');
+                
+                const output = document.getElementById('common-output');
+                output.style.display = 'block';
+                output.textContent = `$ ${command}\n\nCommand copied! Paste in terminal to ask Claude.`;
+            }
+        }
+        
+        // Add memory
+        function addMemory() {
+            const note = document.getElementById('memoryNote').value;
+            if (note) {
+                const command = `claude "Please remember this for our project: ${note}"`;
+                navigator.clipboard.writeText(command);
+                showStatus('Memory command copied!');
+                
+                const output = document.getElementById('memory-output');
+                output.style.display = 'block';
+                output.textContent = `$ ${command}\n\nClaude will save this to Mem0 for future reference.`;
+            }
+        }
+        
+        // Search memory
+        function searchMemory() {
+            const query = window.prompt('What would you like to search for?', 'project decisions');
+            if (query) {
+                const command = `claude "Search my memories for: ${query}"`;
+                navigator.clipboard.writeText(command);
+                showStatus('Search command copied!');
+                
+                const output = document.getElementById('memory-output');
+                output.style.display = 'block';
+                output.textContent = `$ ${command}\n\nClaude will search all saved memories.`;
+            }
+        }
+        
+        // Commit changes
+        function commitChanges() {
+            const message = document.getElementById('commitMessage').value || 'Updated project';
+            const command = `git add . && git commit -m "${message}"`;
+            
+            navigator.clipboard.writeText(command);
+            showStatus('Commit command copied!');
+            
+            const output = document.getElementById('git-output');
+            output.style.display = 'block';
+            output.textContent = `$ ${command}\n\nThis will save all your changes with the message: "${message}"`;
+        }
+        
+        // Show example
+        function showExample() {
+            const output = document.getElementById('help-output');
+            output.style.display = 'block';
+            output.textContent = `EXAMPLE WORKFLOW:
+
+1. Create Project: "recipe-tracker"
+2. Start Building: "I want a web app to save my favorite recipes with photos"
+3. Claude creates everything for you
+4. You say: "Make the recipe cards bigger"
+5. Claude updates the code
+6. Save Changes: "Made recipe cards bigger"
+
+That's it! No coding knowledge needed. Just describe what you want!`;
+        }
+    </script>
+</body>
+</html>

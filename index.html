@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Power Tools - Complete Setup & Usage Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 36px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 18px;
+            text-align: center;
+        }
+        
+        .credits {
+            background: #f0f4ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px solid #e0e7ff;
+        }
+        
+        .credits h3 {
+            color: #4c51bf;
+            margin-bottom: 10px;
+        }
+        
+        .credits p {
+            color: #4a5568;
+            font-size: 14px;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .section-title {
+            color: #2d3748;
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .step-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        code {
+            background: #2d3748;
+            color: #48bb78;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            margin: 10px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .copy-button:hover {
+            background: #2d3748;
+        }
+        
+        .workflow-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .help-box {
+            background: #e6fffa;
+            border: 2px solid #81e6d9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .help-box h4 {
+            color: #234e52;
+            margin-bottom: 5px;
+        }
+        
+        .help-box p {
+            color: #2c5f5d;
+            font-size: 14px;
+        }
+        
+        .warning-box {
+            background: #fff5f5;
+            border: 2px solid #feb2b2;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .warning-box h4 {
+            color: #742a2a;
+            margin-bottom: 5px;
+        }
+        
+        .warning-box p {
+            color: #9b2c2c;
+            font-size: 14px;
+        }
+        
+        .tool-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .tool-card h4 {
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        
+        .tool-card p {
+            color: #4a5568;
+            font-size: 14px;
+        }
+        
+        .status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #48bb78;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+            z-index: 1000;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #4a5568;
+        }
+        
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #48bb78;
+            font-weight: bold;
+        }
+        
+        .emoji {
+            font-size: 24px;
+            vertical-align: middle;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="emoji">🚀</span> Claude Power Tools - Complete Guide</h1>
+        <p class="subtitle">Transform your ideas into reality with AI - no coding experience needed!</p>
+        
+        <!-- Credits Section -->
+        <div class="credits">
+            <h3>🙏 Powered By Amazing Tools</h3>
+            <p><strong>Claude by Anthropic</strong> - Your AI coding partner<br>
+            <strong>Repomix</strong> - Code context generation by @yamadashy<br>
+            <strong>Taskmaster</strong> - Intelligent task management<br>
+            <strong>Mem0</strong> - AI memory system<br>
+            <strong>Vercel</strong> - Instant deployment platform</p>
+        </div>
+        
+        <!-- What is This Section -->
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">🤔</span> What Are Claude Power Tools?</h2>
+            
+            <div class="help-box">
+                <h4>In Simple Terms:</h4>
+                <p>This is like having a super-smart coding assistant who understands plain English. You tell it what you want to build (like "make me a website for my bakery"), and it creates everything for you - no coding knowledge required!</p>
+            </div>
+            
+            <div class="tool-card">
+                <h4>What You Can Build:</h4>
+                <p>✨ Websites with animations<br>
+                   📊 Data dashboards<br>
+                   🎮 Interactive games<br>
+                   📱 Mobile-friendly apps<br>
+                   🤖 Automation tools<br>
+                   💼 Business applications</p>
+            </div>
+        </div>
+        
+        <!-- Installation Section -->
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">🛠️</span> One-Time Setup (10 minutes)</h2>
+            
+            <div class="step">
+                <div class="step-number">Step 1: Install Claude Desktop</div>
+                <p>Download Claude Desktop from <a href="https://claude.ai/download" target="_blank">claude.ai/download</a></p>
+                <div class="code-block">
+# For Mac users with Homebrew:
+brew install --cask claude
+<button class="copy-button" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">Step 2: Install Node.js (Required for tools)</div>
+                <p>Visit <a href="https://nodejs.org" target="_blank">nodejs.org</a> and download the LTS version, or use Homebrew:</p>
+                <div class="code-block">
+# For Mac users:
+brew install node
+
+# Verify installation:
+node --version
+npm --version
+<button class="copy-button" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">Step 3: Install Power Tools</div>
+                <p>Copy and run these commands in your terminal:</p>
+                <div class="code-block">
+# Install Repomix (for code context)
+npm install -g repomix
+
+# Install Taskmaster (for task management)
+npm install -g task-master-cli
+
+# Install Vercel (for instant deployment)
+npm install -g vercel
+
+# Verify all tools are installed:
+repomix --version && task-master --version && vercel --version
+<button class="copy-button" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">Step 4: Set Up Mem0 (Optional but Recommended)</div>
+                <p>Mem0 gives Claude memory so it remembers your preferences and past projects:</p>
+                <div class="code-block">
+# Get your free API key from https://mem0.dev
+# Then add to your shell profile:
+echo 'export MEM0_API_KEY="your-api-key-here"' >> ~/.zshrc
+source ~/.zshrc
+<button class="copy-button" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="help-box">
+                <h4>Need Help?</h4>
+                <p>If you get stuck, just copy this entire HTML file into Claude and say: "I'm trying to set up Claude Power Tools. I'm on step [X] and seeing [error message]. Can you help?"</p>
+            </div>
+        </div>
+        
+        <!-- Quick Verification Section -->
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">✅</span> Verify Everything Works</h2>
+            
+            <div class="step">
+                <div class="step-number">Run This Test Command:</div>
+                <div class="code-block">
+# This will check all tools are installed correctly:
+echo "Checking installations..." && \
+command -v node >/dev/null 2>&1 && echo "✓ Node.js installed" || echo "✗ Node.js missing" && \
+command -v repomix >/dev/null 2>&1 && echo "✓ Repomix installed" || echo "✗ Repomix missing" && \
+command -v task-master >/dev/null 2>&1 && echo "✓ Taskmaster installed" || echo "✗ Taskmaster missing" && \
+command -v vercel >/dev/null 2>&1 && echo "✓ Vercel installed" || echo "✗ Vercel missing"
+<button class="copy-button" onclick="copyCode(this)">Copy</button>
+                </div>
+                <p>You should see checkmarks (✓) next to each tool. If you see X marks, reinstall that specific tool.</p>
+            </div>
+        </div>
+        
+        <!-- How to Use Section -->
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">🎯</span> How to Use Claude Power Tools</h2>
+            
+            <div class="workflow-section">
+                <h3>🌟 The Magic Formula</h3>
+                <ol>
+                    <li><strong>Open Terminal</strong> (Command+Space, type "Terminal" on Mac)</li>
+                    <li><strong>Navigate to where you want to create projects</strong>: <code>cd ~/Desktop</code></li>
+                    <li><strong>Start Claude</strong>: <code>claude</code></li>
+                    <li><strong>Tell Claude what you want in plain English!</strong></li>
+                </ol>
+                
+                <div class="help-box">
+                    <h4>Example Conversations with Claude:</h4>
+                    <p>"Create a website for my coffee shop with a menu and contact form"<br>
+                    "Build me a habit tracker that saves my progress"<br>
+                    "Make an animated landing page for my startup"<br>
+                    "Create a dashboard that shows cryptocurrency prices"</p>
+                </div>
+            </div>
+            
+            <div class="workflow-section">
+                <h3>📁 Working with Projects</h3>
+                
+                <div class="input-group">
+                    <input type="text" id="projectName" placeholder="Enter project name (e.g., my-awesome-app)">
+                    <button onclick="createProject()">Create Project</button>
+                </div>
+                
+                <div class="button-grid">
+                    <button onclick="showCommand('repomix')" title="Generates a context file of your entire project">
+                        📦 Generate Project Context
+                    </button>
+                    <button onclick="showCommand('task-master init')" title="Initialize task tracking for complex projects">
+                        📋 Start Task Tracking
+                    </button>
+                    <button onclick="showCommand('git init')" title="Initialize version control">
+                        🗂️ Initialize Git
+                    </button>
+                    <button onclick="showCommand('npm init -y')" title="Create package.json for Node projects">
+                        📦 Initialize NPM
+                    </button>
+                </div>
+            </div>
+            
+            <div class="workflow-section">
+                <h3>🚀 Deploy & Share</h3>
+                
+                <div class="warning-box">
+                    <h4>First Time Only:</h4>
+                    <p>Run <code>vercel login</code> to create a free account (takes 30 seconds)</p>
+                </div>
+                
+                <div class="button-grid">
+                    <button onclick="showCommand('vercel --prod')" title="Deploy your project and get a shareable URL">
+                        🌐 Deploy to Internet
+                    </button>
+                    <button onclick="showCommand('vercel dev')" title="Preview locally before deploying">
+                        👁️ Preview Locally
+                    </button>
+                </div>
+                
+                <div class="help-box">
+                    <h4>What Happens:</h4>
+                    <p>When you deploy, Vercel gives you a URL like: <code>https://your-project.vercel.app</code><br>
+                    Share this with anyone - they can view your creation instantly!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Common Commands Reference -->
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">📚</span> Quick Reference</h2>
+            
+            <div class="workflow-section">
+                <h3>Essential Commands</h3>
+                
+                <div class="tool-card">
+                    <h4>🤖 Claude Commands</h4>
+                    <div class="code-block">
+# Start Claude
+claude
+
+# Ask Claude anything
+claude "How do I add a login page to my app?"
+
+# Have Claude analyze your project
+claude "Review my code and suggest improvements"
+<button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <h4>📦 Repomix Commands</h4>
+                    <div class="code-block">
+# Generate context file (Claude can read your entire project)
+repomix
+
+# Include specific file types only
+repomix --include="*.js,*.jsx"
+
+# Exclude folders
+repomix --exclude="node_modules,dist"
+<button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <h4>📋 Taskmaster Commands</h4>
+                    <div class="code-block">
+# Initialize task tracking
+task-master init
+
+# View current task
+task-master current
+
+# Complete current task
+task-master complete
+
+# List all tasks
+task-master list
+<button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <h4>🚀 Deployment Commands</h4>
+                    <div class="code-block">
+# Deploy to production
+vercel --prod
+
+# Deploy with custom name
+vercel --prod --name my-cool-app
+
+# View deployment logs
+vercel logs
+<button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Troubleshooting Section -->
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">🔧</span> Troubleshooting</h2>
+            
+            <div class="tool-card">
+                <h4>Common Issues & Solutions</h4>
+                <ul class="checklist">
+                    <li><strong>"command not found"</strong> → Reinstall that specific tool</li>
+                    <li><strong>"permission denied"</strong> → Add 'sudo' before the command</li>
+                    <li><strong>"port already in use"</strong> → Close other applications or use a different port</li>
+                    <li><strong>Vercel asks for login</strong> → Run 'vercel login' first</li>
+                    <li><strong>Claude doesn't respond</strong> → Make sure Claude Desktop is running</li>
+                </ul>
+            </div>
+            
+            <div class="help-box">
+                <h4>Get Help from Claude:</h4>
+                <p>Copy any error message and ask Claude: "I got this error: [paste error]. How do I fix it?"</p>
+            </div>
+        </div>
+        
+        <!-- Success Stories Section -->
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">🌟</span> What People Build</h2>
+            
+            <div class="workflow-section">
+                <h3>Real Examples from Non-Coders:</h3>
+                <ul class="checklist">
+                    <li><strong>Restaurant Owner:</strong> "Made a website with online menu in 20 minutes"</li>
+                    <li><strong>Teacher:</strong> "Created an interactive quiz app for my students"</li>
+                    <li><strong>Fitness Coach:</strong> "Built a workout tracker with progress charts"</li>
+                    <li><strong>Small Business:</strong> "Made a customer feedback dashboard"</li>
+                    <li><strong>Artist:</strong> "Created an animated portfolio with 3D effects"</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Next Steps -->
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">🎉</span> You're Ready!</h2>
+            
+            <div class="help-box">
+                <h4>Your First Project:</h4>
+                <p>1. Open Terminal<br>
+                2. Type: <code>cd ~/Desktop && claude</code><br>
+                3. Tell Claude: "Create a simple website about [your interest]"<br>
+                4. Watch the magic happen!</p>
+            </div>
+            
+            <div class="workflow-section">
+                <h3>Remember:</h3>
+                <ul class="checklist">
+                    <li>You don't need to understand the code</li>
+                    <li>Describe what you want in plain English</li>
+                    <li>Claude handles all the technical stuff</li>
+                    <li>You can always ask for changes</li>
+                    <li>Everything is saved automatically</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="status" id="status"></div>
+    
+    <script>
+        // Show status message
+        function showStatus(message, duration = 3000) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, duration);
+        }
+        
+        // Copy code to clipboard
+        function copyCode(button) {
+            const codeBlock = button.parentElement;
+            const code = codeBlock.textContent.replace('Copy', '').trim();
+            navigator.clipboard.writeText(code);
+            
+            button.textContent = 'Copied!';
+            button.style.background = '#48bb78';
+            
+            setTimeout(() => {
+                button.textContent = 'Copy';
+                button.style.background = '#4a5568';
+            }, 2000);
+        }
+        
+        // Show command
+        function showCommand(command) {
+            navigator.clipboard.writeText(command);
+            showStatus(`Command copied: ${command}`);
+        }
+        
+        // Create project
+        function createProject() {
+            const projectName = document.getElementById('projectName').value || 'my-project';
+            const commands = `mkdir ${projectName} && cd ${projectName} && git init && npm init -y`;
+            
+            navigator.clipboard.writeText(commands);
+            showStatus('Project creation commands copied! Paste in Terminal to create your project.');
+        }
+        
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Cmd/Ctrl + K to focus on project name input
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('projectName').focus();
+            }
+        });
+        
+        // Auto-expand code blocks on hover
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('mouseenter', () => {
+                block.style.backgroundColor = '#1a202c';
+            });
+            
+            block.addEventListener('mouseleave', () => {
+                block.style.backgroundColor = '#2d3748';
+            });
+        });
+    </script>
+</body>
+</html>
