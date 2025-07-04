@@ -188,39 +188,48 @@ echo "🚀 Launching Claude Code Max Power Workspace (Opus 4 + Skip Permissions)
 export AIDER_DANGEROUSLY_SKIP_PERMISSIONS=true
 export AIDER_MODEL=claude-opus-4
 
-# Create new tmux session with environment preserved
-tmux new-session -d -s claude-power -n main
+# Kill any existing session
+tmux kill-session -t claude-power 2>/dev/null || true
 
-# Set environment in tmux session
+# Create new tmux session
+tmux new-session -d -s claude-power
+
+# Create the layout: 2x2 grid
+# Top-left: Claude (larger)
+# Top-right: GitUI
+# Bottom-left: File tree
+# Bottom-right: Git status
+
+# Start in the main window
 tmux send-keys -t claude-power:0 'export AIDER_DANGEROUSLY_SKIP_PERMISSIONS=true' C-m
 tmux send-keys -t claude-power:0 'export AIDER_MODEL=claude-opus-4' C-m
 tmux send-keys -t claude-power:0 'clear' C-m
 
-# Split window into 4 panes
-# Pane 1: Claude Code (top-left, largest)
-# Pane 2: GitUI (top-right)
-# Pane 3: File tree watch (bottom-left)
-# Pane 4: Git status watch (bottom-right)
+# Split horizontally (top/bottom)
+tmux split-window -t claude-power:0 -v -p 30
 
-# Split horizontally first
-tmux split-window -h -p 40
+# Select top pane and split vertically (left/right)
+tmux select-pane -t claude-power:0.0
+tmux split-window -t claude-power:0 -h -p 40
 
-# Split the right pane vertically
-tmux select-pane -t 1
-tmux split-window -v -p 30
+# Select bottom pane and split vertically (left/right)
+tmux select-pane -t claude-power:0.2
+tmux split-window -t claude-power:0 -h -p 40
 
-# Split the left pane vertically
-tmux select-pane -t 0
-tmux split-window -v -p 25
+# Now we have 4 panes:
+# 0 = top-left (Claude)
+# 1 = top-right (GitUI)
+# 2 = bottom-left (Tree)
+# 3 = bottom-right (Git status)
 
 # Run commands in each pane
-tmux send-keys -t 0 'claude' C-m
-tmux send-keys -t 1 'gitui' C-m
-tmux send-keys -t 2 'watch -n 1 "tree -C -L 3 --dirsfirst | head -40"' C-m
-tmux send-keys -t 3 'watch -n 1 "git status --short && echo \"---\" && git diff --stat"' C-m
+tmux send-keys -t claude-power:0.0 'claude' C-m
+tmux send-keys -t claude-power:0.1 'gitui' C-m
+tmux send-keys -t claude-power:0.2 'watch -n 1 "tree -C -L 3 --dirsfirst | head -30"' C-m
+tmux send-keys -t claude-power:0.3 'watch -n 1 "git status --short && echo && git diff --stat"' C-m
 
-# Focus on Claude pane
-tmux select-pane -t 0
+# Select Claude pane
+tmux select-pane -t claude-power:0.0
 
 # Attach to session
 tmux attach-session -t claude-power
