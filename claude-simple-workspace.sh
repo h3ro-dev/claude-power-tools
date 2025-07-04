@@ -14,8 +14,11 @@ tmux kill-session -t claude-simple 2>/dev/null || true
 tmux new-session -d -s claude-simple
 tmux split-window -h -p 40
 
-# Left pane: Claude
-tmux send-keys -t claude-simple:0.0 'claude' C-m
+# Left pane: Show options
+tmux send-keys -t claude-simple:0.0 'echo "🎯 Ready! Choose your AI:"' C-m
+tmux send-keys -t claude-simple:0.0 'echo "  claude - Claude Code Max"' C-m
+tmux send-keys -t claude-simple:0.0 'echo "  caider - Aider (Opus 4 + skip perms)"' C-m
+tmux send-keys -t claude-simple:0.0 'echo ""' C-m
 
 # Right pane: GitUI
 tmux send-keys -t claude-simple:0.1 'gitui' C-m

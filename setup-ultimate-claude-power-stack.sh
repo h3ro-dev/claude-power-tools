@@ -230,7 +230,19 @@ tmux split-window -t claude-power:0 -h -p 40
 # 3 = bottom-right (Git status)
 
 # Run commands in each pane
-tmux send-keys -t claude-power:0.0 'claude' C-m
+# For Claude pane, show instructions instead of auto-launching
+tmux send-keys -t claude-power:0.0 'echo "🎯 Claude Code Max Power Workspace Ready!"' C-m
+tmux send-keys -t claude-power:0.0 'echo ""' C-m
+tmux send-keys -t claude-power:0.0 'echo "Commands available:"' C-m
+tmux send-keys -t claude-power:0.0 'echo "  claude     - Launch Claude Code Max"' C-m
+tmux send-keys -t claude-power:0.0 'echo "  caider     - Launch Aider with Opus 4 + skip permissions"' C-m
+tmux send-keys -t claude-power:0.0 'echo "  aider      - Launch Aider with manual settings"' C-m
+tmux send-keys -t claude-power:0.0 'echo ""' C-m
+tmux send-keys -t claude-power:0.0 'echo "Environment set: AIDER_MODEL=claude-opus-4"' C-m
+tmux send-keys -t claude-power:0.0 'echo "                 AIDER_DANGEROUSLY_SKIP_PERMISSIONS=true"' C-m
+tmux send-keys -t claude-power:0.0 'echo ""' C-m
+
+# Launch other panes normally
 tmux send-keys -t claude-power:0.1 'gitui' C-m
 tmux send-keys -t claude-power:0.2 'watch -n 1 "tree -C -L 3 --dirsfirst | head -30"' C-m
 tmux send-keys -t claude-power:0.3 'watch -n 1 "git status --short && echo && git diff --stat"' C-m
@@ -298,6 +310,7 @@ alias cprompt='code2prompt . | pbcopy && echo "Codebase copied to clipboard!"'
 
 # Aider with Opus 4 and skip permissions by default
 alias caider='aider --dangerously-skip-permissions --model claude-opus-4'
+alias aider-launch='~/claude-power-tools/aider-launcher.sh'
 
 # Function to feed file changes to Claude
 cfeed() {
