@@ -168,6 +168,14 @@ setw -g aggressive-resize on
 set -g pane-min-width 20
 set -g pane-min-height 5
 
+# Scrolling settings
+set -g history-limit 50000
+setw -g mode-keys vi
+
+# Allow scrolling with mouse wheel
+bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'select-pane -t=; copy-mode -e; send-keys -M'"
+bind -n WheelDownPane select-pane -t= \; send-keys -M
+
 # Status bar
 set -g status-style bg=colour235,fg=colour136
 set -g status-left '#[fg=colour235,bg=colour252,bold] Claude Power '

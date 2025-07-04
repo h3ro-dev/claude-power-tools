@@ -26,6 +26,13 @@ gptme                 # Terminal AI agent
 - **Create new window**: `Ctrl-a` + `c`
 - **Switch windows**: `Ctrl-a` + number
 
+### Scrolling in Tmux
+- **Enter scroll mode**: `Ctrl-a` + `[`
+- **Exit scroll mode**: `q` or `Esc`
+- **With mouse**: Just scroll! (after entering scroll mode)
+- **Page up/down**: `Page Up`/`Page Down` (in scroll mode)
+- **Search**: `/` (forward) or `?` (backward) in scroll mode
+
 ### Resizing Panes
 - **With keyboard**: `Ctrl-a` then hold `Alt` + arrow keys
 - **With mouse**: Just drag the pane borders!
