@@ -158,8 +158,15 @@ unbind C-b
 bind | split-window -h
 bind - split-window -v
 
-# Mouse support
+# Mouse support - allows resizing panes with mouse
 set -g mouse on
+
+# Better resize behavior
+setw -g aggressive-resize on
+
+# Minimum pane sizes
+set -g pane-min-width 20
+set -g pane-min-height 5
 
 # Status bar
 set -g status-style bg=colour235,fg=colour136

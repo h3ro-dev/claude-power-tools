@@ -20,11 +20,20 @@ gptme                 # Terminal AI agent
 
 ## 📊 Tmux Controls (After launching cpower)
 
+### Navigation
 - **Switch panes**: `Ctrl-a` + arrow keys
-- **Resize pane**: `Ctrl-a` + hold arrow key
-- **Zoom pane**: `Ctrl-a` + `z`
+- **Zoom pane**: `Ctrl-a` + `z` (fullscreen toggle)
 - **Create new window**: `Ctrl-a` + `c`
 - **Switch windows**: `Ctrl-a` + number
+
+### Resizing Panes
+- **With keyboard**: `Ctrl-a` then hold `Alt` + arrow keys
+- **With mouse**: Just drag the pane borders!
+- **Quick layouts**:
+  - `Ctrl-a` + `Space` - Cycle through layouts
+  - `Ctrl-a` + `Alt-1` - Even horizontal
+  - `Ctrl-a` + `Alt-2` - Even vertical
+  - `Ctrl-a` + `Alt-5` - Tiled (equal sizes)
 
 ## 🎯 Power Workflows
 
