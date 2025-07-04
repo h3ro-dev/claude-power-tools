@@ -180,12 +180,21 @@ echo "✅ Created tmux configuration at ~/.tmux.claude.conf"
 # Create launch script
 cat > ~/claude-power-workspace.sh << 'EOF'
 #!/bin/bash
-# Launch Claude Code Max Power Workspace
+# Launch Claude Code Max Power Workspace with OPUS 4 ONLY
 
-echo "🚀 Launching Claude Code Max Power Workspace..."
+echo "🚀 Launching Claude Code Max Power Workspace (Opus 4 + Skip Permissions)..."
 
-# Create new tmux session
+# Set environment variables for skip permissions mode
+export AIDER_DANGEROUSLY_SKIP_PERMISSIONS=true
+export AIDER_MODEL=claude-opus-4
+
+# Create new tmux session with environment preserved
 tmux new-session -d -s claude-power -n main
+
+# Set environment in tmux session
+tmux send-keys -t claude-power:0 'export AIDER_DANGEROUSLY_SKIP_PERMISSIONS=true' C-m
+tmux send-keys -t claude-power:0 'export AIDER_MODEL=claude-opus-4' C-m
+tmux send-keys -t claude-power:0 'clear' C-m
 
 # Split window into 4 panes
 # Pane 1: Claude Code (top-left, largest)
@@ -272,7 +281,7 @@ alias ccontext='repomix && echo "Context file generated!"'
 alias cprompt='code2prompt . | pbcopy && echo "Codebase copied to clipboard!"'
 
 # Aider with Opus 4 and skip permissions by default
-alias caider='aider --dangerously-skip-permissions --model claude-3-opus-20240229'
+alias caider='aider --dangerously-skip-permissions --model claude-opus-4'
 
 # Function to feed file changes to Claude
 cfeed() {

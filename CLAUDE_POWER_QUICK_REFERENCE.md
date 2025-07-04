@@ -4,7 +4,7 @@
 
 ### Full Power Workspace
 ```bash
-cpower  # Launches 4-pane tmux setup
+cpower  # Launches 4-pane tmux setup with Opus 4 + skip permissions enabled
 ```
 
 ### Individual Tools
@@ -86,6 +86,13 @@ claude-squad run
 - **Git**: Already configured to use Delta
 - **ShellGPT**: `~/.config/shell_gpt/.sgptrc`
 
+## 🌍 Environment Variables (Set by cpower)
+
+```bash
+AIDER_DANGEROUSLY_SKIP_PERMISSIONS=true  # No permission prompts
+AIDER_MODEL=claude-opus-4                 # Always use Opus 4
+```
+
 ## ⚡ Quick Aliases
 
 ```bash
@@ -127,7 +134,7 @@ repomix --include="*.py" --exclude="tests/*"
 # Use Aider for complex refactoring (with skip permissions)
 caider --file src/main.py
 # Or manually:
-aider --dangerously-skip-permissions --claude-3-opus-20240229 --file src/main.py
+aider --dangerously-skip-permissions --model claude-opus-4 --file src/main.py
 
 # Use gptme for quick scripts
 gptme "write a script to backup my database"

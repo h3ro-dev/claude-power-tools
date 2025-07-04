@@ -2,7 +2,7 @@
 # Place this in your project root or ~/.aider.conf.yml
 
 # Model Settings - OPUS 4 ONLY
-model: claude-3-opus-20240229  # This will need to be updated when Opus 4 model name is available
+model: claude-opus-4  # Using Opus 4 - NOT Claude 3!
 edit-format: diff
 show-diffs: true
 
